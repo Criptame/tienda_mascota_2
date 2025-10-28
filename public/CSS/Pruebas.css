@@ -1,0 +1,507 @@
+
+
+
+/* Fija el logo en la esquina superior izquierda */
+.logo-container {
+  position: fixed;
+  top: 1px;      /* Distancia desde el borde superior */
+  left: 1px;     /* Distancia desde el borde izquierdo */
+  z-index: 1000;  /* Asegura que el logo se quede por encima de otros elementos */
+  background-color: transparent; /* Asegúrate de que el fondo del contenedor sea transparente */
+}
+
+.logo {
+  width: 330px;    /* Ajusta el tamaño del logo según lo necesites */
+  height: auto; 
+  position: fixed;
+  top: 10px;          /* distancia desde arriba */
+  left: 20px;         /* distancia desde el borde izquierdo */
+  width: 330px;       /* tamaño del logo */
+  z-index: 1000;   /* Mantiene la relación de aspecto */
+}
+
+/* Espacio adicional para evitar que el logo se superponga al header */
+body {
+  padding-top: 70px; /* Ajusta este valor si es necesario */
+}
+
+/* Asegúrate de que el header no tape el logo */
+header {
+  position: relative; /* Cambio de sticky a relative */
+  z-index: 500;  /* Menor que el logo para que el logo se vea encima */
+}
+
+
+/* Reset y configuración base */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Letra y fondo minimalista */
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: #f8fafc;
+  color: #2d3748;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+/* Encabezado minimalista */
+header {
+  background-color: #2d3748;
+  padding: 5rem 15rem;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: flex-end; /* alinea contenido a la derecha */
+  align-items: center;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 2.5rem;
+  font-weight: 300;
+  letter-spacing: -0.5px;
+}
+
+/* Barra de navegación minimalista */
+.navbar {
+  background-color: #4a5568;
+  padding: 1rem 0;
+  text-align: right;           /* Cambiado de center a left */
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  display: flex;              /* Añadido para usar flexbox */
+  justify-content: flex-start;/* Alinea elementos al inicio (izquierda) */
+  align-items: center;
+}
+
+/* Botón alineado a la izquierda */
+.navbar button {
+  background: #718096;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  margin-left: 1rem;         /* Opcional: agrega un margen izquierdo */
+}
+
+.navbar button:hover {
+  background: #63b3ed;
+}
+
+
+.menu-superior ul {
+  list-style: none;
+  display: flex;
+  gap: 11rem;
+  margin: 0;
+  padding: 0;
+  align-items: center;
+}
+
+.menu-superior li {
+  display: inline;
+}
+
+.menu-superior a {
+  display: inline-block;
+  background-color: hsla(40, 52%, 39%, 0.904);
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.menu-superior a:hover {
+  background-color: #63b3ed;
+  color: #fff;
+}
+
+/* Tarjetas minimalistas */
+.card {
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+  margin: 2rem auto;
+  max-width: 800px;
+  padding: 2.5rem;
+  border: 1px solid #e2e8f0;
+}
+
+.card h2 {
+  font-size: 1.8rem;
+  color: #2d3748;
+  margin-bottom: 1rem;
+  font-weight: 500;
+  text-align: center;
+}
+
+.card p {
+  font-size: 1.1rem;
+  color: #4a5568;
+  line-height: 1.7;
+  text-align: center;
+}
+
+.catalogo {
+  padding: 3rem 2rem;
+  text-align: center;
+}
+
+.productos h2 {
+  margin-bottom: 1rem;
+  color: #5a3825;
+}
+
+.grid-productos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 2rem;
+  margin-top: 1rem;
+}
+
+.producto {
+  background-color: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+  padding: 1rem;
+  transition: transform 0.2s ease;
+}
+
+.producto:hover {
+  transform: scale(1.03);
+}
+
+.producto img {
+  width: 100%;
+  border-radius: 1rem;
+}
+
+.producto h3 {
+  margin: 0.5rem 0;
+}
+
+.producto button {
+  background-color: #d77a33;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.producto button:hover {
+  background-color: #b65f25;
+}
+
+
+.add-to-cart {
+  background: #4299e1;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+  width: 100%;
+  transition: background-color 0.2s ease;
+}
+
+.add-to-cart:hover {
+  background: #3182ce;
+}
+
+/* Formularios minimalistas */
+form {
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+  color: #4a5568;
+  font-size: 1.1rem;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+input[type="number"] {
+  width: 100%;
+  padding: 0.75rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  transition: border-color 0.2s ease;
+}
+
+input[type="text"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus {
+  outline: none;
+  border-color: #4299e1;
+  box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.1);
+}
+
+button[type="submit"] {
+  background: #48bb78;
+  color: white;
+  border: none;
+  padding: 0.75rem 2rem;
+  border-radius: 4px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+  width: 100%;
+}
+
+button[type="submit"]:hover {
+  background: #38a169;
+}
+
+.error {
+  color: #e53e3e;
+  font-size: 0.9rem;
+  margin-top: -0.5rem;
+  margin-bottom: 1rem;
+  display: block;
+}
+
+.inicio-fotos {
+  display: flex;
+  justify-content: center;
+  gap: 12rem;            
+  margin: 3rem auto;    
+  max-width: 1200px;
+  flex-wrap: wrap;      
+}
+
+.inicio-fotos img {
+  width: 500px;          
+  max-width: 100%;       
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+  border: 1px solid #e2e8f0;
+  transition: transform 0.3s ease;
+}
+
+.inicio-fotos img:hover {
+  transform: scale(1.05);
+}
+
+.hero {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: #f1dbb1f8; 
+  padding: 5rem 1rem;
+  border-radius: 12px;
+  margin: 2rem auto;
+  max-width: 1200px;
+  gap: 2rem;
+  flex-wrap: wrap;
+}
+
+.hero-text h2 {
+  font-size: 3rem;
+  color: #0b0b0bda;
+  margin-bottom: 1rem;
+}
+
+.hero-text p {
+  font-size: 2rem;
+  color: #0b0b0bda;
+  margin-bottom: 1.5rem;
+}
+
+.btn-hero {
+  display: inline-block;
+  background-color: #3182ce;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: background-color 0.3s ease;
+}
+
+.btn-hero:hover {
+  background-color: #3182ce;
+}
+
+.hero-image img {
+  width: 400px;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+.acerca-de {
+  display: flex;                    /* activa flexbox */
+  align-items: center;              /* centra verticalmente */
+  justify-content: space-between;   /* texto a la izquierda, imagen a la derecha */
+  gap: 10rem;                       /* separación entre columnas */
+  padding: 3rem 2rem;
+  max-width: 1200px;
+  margin: 2rem auto;
+  flex-wrap: wrap;                  /* en móvil se acomodan en columna */
+  background-color: #4a5568;        /* fondo café */
+  border-radius: 12px;
+  color: #ffffff;                   /* texto blanco para contraste */
+}
+
+.acerca-texto {
+  flex: 1;
+}
+
+.acerca-texto h2 {
+  font-size: 3rem;                /* título más grande */
+  color: #ffffff;
+  margin-bottom: 1rem;
+}
+
+.acerca-texto p {
+  font-size: 1.5rem;                /* párrafo más grande */
+  line-height: 1.6;                 /* espacio entre líneas */
+  color: #ffffff;
+}
+
+.acerca-imagen img {
+  width: 450px;
+  max-width: 100%;
+  border-radius: 12px;
+  box-shadow: 0 6px 16px rgba(0,0,0,0.15);
+}
+
+
+
+.footer {
+  background-color: #3b2e2a; /* Marrón oscuro */
+  color: #f5f5f5;
+  padding: 40px 0 10px;
+  font-family: Arial, sans-serif;
+}
+
+.footer-contenedor {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  text-align: left;
+  max-width: 1200px;
+  margin: auto;
+}
+
+.footer-seccion {
+  flex: 1;
+  min-width: 200px;
+  margin: 10px 20px;
+}
+
+.footer-seccion h3 {
+  border-bottom: 2px solid #f5f5f5;
+  padding-bottom: 5px;
+  margin-bottom: 10px;
+}
+
+.footer-seccion ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-seccion ul li {
+  margin: 8px 0;
+}
+
+.footer-seccion a {
+  color: #f5f5f5;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+
+.footer-seccion a:hover {
+  color: #ffcc66;
+}
+
+.footer-seccion.redes img {
+  width: 25px;
+  margin-right: 10px;
+  transition: transform 0.3s;
+}
+
+.footer-seccion.redes img:hover {
+  transform: scale(1.1);
+}
+
+.footer-copy {
+  text-align: center;
+  border-top: 1px solid #f5f5f5;
+  margin-top: 30px;
+  padding-top: 10px;
+  font-size: 14px;
+  opacity: 0.8;
+}
+
+body {
+  font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+  background-color: hsla(40, 82%, 13%, 0.685); 
+  color: #2d3748;
+  line-height: 1.6;
+  margin: 0;
+  padding: 0;
+}
+
+
+/* Responsive */
+@media (max-width: 768px) {
+  header h1 {
+    font-size: 2rem;
+  }
+  
+  .card {
+    padding: 1.5rem;
+    margin: 1rem;
+  }
+  
+  .product-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .navbar button {
+    font-size: 1.2rem;
+    padding: 0.4rem 0.8rem;
+  }
+}
+
+
+html, body {
+  height: 100%;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+/* Asegura que el footer quede al final */
+footer {
+  margin-top: auto;
+}

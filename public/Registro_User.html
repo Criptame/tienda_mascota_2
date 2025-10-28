@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Pets - Inicio</title>
+  <link rel="stylesheet" href="../CSS/Pruebas.css">
+  <link rel="website icon" type="png"
+  href="../IMG/LogoHappyPets.png">
+</head>
+
+
+<body>
+
+  <header>
+    <div class="logo-container">
+      <img src="../IMG/LogoHappyPets.png" alt="Logo de HappyPets" class="logo">
+    </div>
+
+    <nav class="menu-superior">
+      <ul>
+        <li><a href="Inicio.html" class="active">Hogar</a></li> 
+        <li><a href="Producto.html">Catálogo</a></li>
+        <li><a href="Carrito.html">Carrito</a></li>
+        
+        <li><a href="Registro_User.html">Registro</a></li>
+        
+      </ul>
+    </nav>
+  </header>
+
+
+  
+  <main>
+    <div class="card">
+      
+      <h2>Iniciar Registro</h2>
+      <form id="loginForm">
+          
+          <label for="correo">Correo:</label>
+          <input type="text" id="correo" placeholder="Ingresa tu correo" required>
+          <span id="correoError" class="error"></span>
+          <br><br>
+
+
+          <label for="nombre">Nombre:</label>
+          <input type="text" id="nombre" placeholder="Ingresa tu nombre" required>
+          <span id="nombreError" class="error"></span>
+          <br><br>
+
+
+          <label for="Apellido">Apellido:</label>
+          <input type="text" id="apellido" placeholder="Ingresa tu apellido" required>
+          <span id="apellidoError" class="error"></span>
+          <br><br>
+          
+          <label for="contraseña">Contraseña:</label>
+          <input type="password" id="contraseña" placeholder="Ingresa tu contraseña" required>
+          <span id="contraseñaError" class="error"></span>
+          <br><br>
+
+          <label for="confirmar_contraseña">Confirmar Contraseña:</label>
+          <input type="password" id="confirmar_contraseña" placeholder="Verifica tu contraseña" required>
+          <span id="confirmar_contraseñaError" class="error"></span>
+          <br><br>
+  
+          <button type="submit">Ingresar</button>
+      </form>
+
+      <p class="link">
+        ¿Ya tienes cuenta?<a href="Inicio_user.html">Ingresa aquí</a>
+    </p>
+
+      <script src="../JS/Restricciones.js"></script>
+    </main>
+
+    <footer class="footer">
+      <div class="footer-contenedor">
+        
+        <div class="footer-seccion">
+          <h3>Happy Pets</h3>
+          <p>Tu tienda de confianza para consentir a tu mascota. Productos de calidad y el mejor servicio.</p>
+        </div>
+    
+        <div class="footer-seccion">
+          <h3>Enlaces Rápidos</h3>
+          <ul>
+            <li><a href="Inicio.html">Inicio</a></li>
+            <li><a href="Producto.html">Catálogo</a></li>
+            <li><a href="Carrito.html">Carrito</a></li>
+            <li><a href="Registro_User.html">Registro</a></li>
+          </ul>
+        </div>
+    
+        <div class="footer-seccion">
+          <h3>Contáctanos</h3>
+          <p>Email: contacto@happypets.com</p>
+          <p>Tel: +56 9 1234 5678</p>
+        </div>
+
+        <div class="footer-seccion Localizacion">
+          <p>!!Estamos en Av. Principal #123, Santiago!!.</p>
+          <p>Horario: Lunes a Sábado, 7:00 am - 8:00 pm</p>
+          </div>
+    
+        <div class="footer-seccion redes">
+          <h3>Síguenos</h3>
+          <a href="https://www.facebook.com/" target="_blank">
+            <img src="../IMG/facebook.png" alt="Facebook"></a> 
+            <a href="https://www.instagram.com/" target="blank">
+            <img src="../IMG/instagram.png" alt="Instagram"></a>
+            <a href="https://x.com/?lang=es" target="_blank">
+            <img src="../IMG/twitter.png" alt="Twitter"></a>
+        </div>
+      </div>
+    
+      <div class="footer-copy">
+        <p>© 2025 Happy Pets. Todos los derechos reservados.</p>
+      </div>
+    </footer>
+
+  </body>
+</html>

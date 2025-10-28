@@ -9,6 +9,7 @@
   href="../IMG/LogoHappyPets.png">
 </head>
 
+
 <body>
 
   <header>
@@ -18,39 +19,29 @@
 
     <nav class="menu-superior">
       <ul>
-        <li><a href="Inicio.html" class="active">Hogar</a></li>
+        <li><a href="Inicio.html" class="active">Hogar</a></li> 
         <li><a href="Producto.html">Catálogo</a></li>
         <li><a href="Carrito.html">Carrito</a></li>
-        
-        <li><a href="Registro_User.html">Registro</a></li>
       
+        <li><a href="Registro_User.html">Registro</a></li>
       </ul>
     </nav>
   </header>
 
-  <main>
-    <section class="hero">
-      <div class="hero-text">
-        <h2>Bienvenido a DogShop</h2>
-        <p>En Happy Pets, encontrarás todo lo que tu mejor amigo necesita para ser feliz. ❤️🐶</p>
-        <a href="Producto.html" class="btn-hero">Ver productos</a>
-      </div>
-      <div class="hero-image">
-        <img src="../IMG/local.png" alt="Perro feliz">
-      </div>
-    </section>
 
-    <section class="acerca-de">
-      <div class="acerca-texto">
-        <h2>Acerca de DogShop</h2>
-        <p>
-          En DogShop nos apasiona conectar a las personas con sus compañeros caninos ideales. Nuestro objetivo es ofrecer una experiencia confiable y alegre para todos los amantes de los perros.
-        </p>
-      </div>
-      <div class="acerca-imagen">
-        <img src="../IMG/images.avif" alt="Perros felices">
-      </div>
-    </section>
+  <main>
+    <div class="card">
+      <h2>Formulario de pedidos</h2>
+      <form>
+        <label>Producto:
+          <input type="text" name="producto" placeholder="Ej: Juguetes">
+        </label>
+        <label>Cantidad:
+          <input type="number" name="cantidad" min="1">
+        </label>
+        <button type="submit">Enviar Pedido</button>
+      </form>
+    </div>
   </main>
 
   <footer class="footer">
@@ -85,13 +76,12 @@
 
       <div class="footer-seccion redes">
         <h3>Síguenos</h3>
-        
         <a href="https://www.facebook.com/" target="_blank">
-          <img src="../IMG/facebook.png" alt="Facebook"></a> 
-          <a href="https://www.instagram.com/" target="blank">
-          <img src="../IMG/instagram.png" alt="Instagram"></a>
-          <a href="https://x.com/?lang=es" target="_blank">
-          <img src="../IMG/twitter.png" alt="Twitter"></a>
+        <img src="../IMG/facebook.png" alt="Facebook"></a> 
+        <a href="https://www.instagram.com/" target="blank">
+        <img src="../IMG/instagram.png" alt="Instagram"></a>
+        <a href="https://x.com/?lang=es" target="_blank">
+        <img src="../IMG/twitter.png" alt="Twitter"></a>
       </div>
     </div>
 
@@ -100,5 +90,9 @@
     </div>
   </footer>
 
+</body>
+</html>
+
+  
 </body>
 </html>
