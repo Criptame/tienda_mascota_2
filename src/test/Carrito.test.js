@@ -3,37 +3,37 @@ import { render, screen, fireEvent } from '@testing-library/react';
 import Carrito from '../src/components/Carrito';
 
 describe('Componente Carrito de Compras', () => {
-  const productosCarrito = [
+const productosCarrito = [
     {
-      id: 1,
-      nombre: 'Juguete Para Perros',
-      precio: 12500,
-      cantidad: 2,
-      imagen: 'shopping.webp'
+    id: 1,
+    nombre: 'Juguete Para Perros',
+    precio: 12500,
+    cantidad: 2,
+    imagen: 'shopping.webp'
     },
     {
-      id: 2, 
-      nombre: 'Cama Para Perros',
-      precio: 33000,
-      cantidad: 1,
-      imagen: 'cama_premiun.webp'
+    id: 2, 
+    nombre: 'Cama Para Perros',
+    precio: 33000,
+    cantidad: 1,
+    imagen: 'cama_premiun.webp'
     }
-  ];
+];
 
-  it('debe mostrar mensaje cuando el carrito está vacío', () => {
+it('debe mostrar mensaje cuando el carrito está vacío', () => {
     render(<Carrito productos={[]} />);
     expect(screen.getByText(/carrito vacío/i)).toBeInTheDocument();
-  });
+});
 
-  it('debe mostrar los productos del carrito', () => {
+it('debe mostrar los productos del carrito', () => {
     render(<Carrito productos={productosCarrito} />);
     
     expect(screen.getByText('Juguete Para Perros')).toBeInTheDocument();
     expect(screen.getByText('Cama Para Perros')).toBeInTheDocument();
     expect(screen.getByText('2')).toBeInTheDocument(); // Cantidad
-  });
+    });
 
-  it('debe calcular el total correctamente', () => {
+it('debe calcular el total correctamente', () => {
     render(<Carrito productos={productosCarrito} />);
     
     const totalEsperado = (12500 * 2) + 33000;
