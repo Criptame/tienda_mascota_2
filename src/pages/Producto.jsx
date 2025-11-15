@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { CarritoContext } from '../context/CarritoContext';
+import { AuthContext } from '../context/AuthContext';
 import '../assets/css/Pruebas.css';
 
-// Importar todas las imágenes del catálogo que existen
+// Importar todas las imágenes disponibles (SIN cama_premium.webp)
 import LogoHappyPets from '../assets/img/LogoHappyPets.png';
 import AlimentoCachorros from '../assets/img/Alimento Cachorros.webp';
 import AlimentoPremiumGatos from '../assets/img/Alimento Premium Gatos.webp';
@@ -29,37 +31,58 @@ import Transportadora from '../assets/img/Transportadora Mascota.webp';
 import TwitterIcon from '../assets/img/twitter.png';
 import Wfaewfe from '../assets/img/wfaewfe(1).webp';
 
-// Imágenes que causan error - usar placeholders o eliminar
-// Si estas imágenes no existen, comentamos las líneas problemáticas
-// import CamaPremium from '../assets/img/cama.premium.webp';
-// import Rewgwgc from '../assets/img/rewgwgc.webp';
-
 const Producto = () => {
   const navigate = useNavigate();
+  const { agregarAlCarrito } = useContext(CarritoContext);
+  const { usuario } = useContext(AuthContext);
   const [cantidades, setCantidades] = useState({});
+  const [mensaje, setMensaje] = useState('');
 
   const handleCantidadChange = (productId, cantidad) => {
+    if (cantidad < 1) return;
     setCantidades(prev => ({
       ...prev,
-      [productId]: Math.max(1, cantidad)
+      [productId]: cantidad
     }));
   };
 
+  const validarCompra = () => {
+    if (!usuario) {
+      setMensaje('Debes iniciar sesión para realizar compras');
+      setTimeout(() => setMensaje(''), 3000);
+      return false;
+    }
+    return true;
+  };
+
   const handleAñadirCarrito = (product) => {
+    if (!validarCompra()) return;
+
     const cantidad = cantidades[product.id] || 1;
-    console.log(`Añadido al carrito: ${cantidad} x ${product.name}`);
-    alert(`¡${cantidad} ${product.name}(s) añadido(s) al carrito!`);
+    const productoConPrecio = {
+      ...product,
+      precioNumerico: parseFloat(product.price.replace('$', '').replace('.', ''))
+    };
+    
+    agregarAlCarrito(productoConPrecio, cantidad);
+    setMensaje(`¡${cantidad} ${product.name}(s) añadido(s) al carrito!`);
+    setTimeout(() => setMensaje(''), 3000);
   };
 
   const handleComprarAhora = (product) => {
+    if (!validarCompra()) return;
+
     const cantidad = cantidades[product.id] || 1;
-    console.log(`Compra directa: ${cantidad} x ${product.name}`);
-    alert(`Redirigiendo al carrito con ${cantidad} ${product.name}(s)`);
+    const productoConPrecio = {
+      ...product,
+      precioNumerico: parseFloat(product.price.replace('$', '').replace('.', ''))
+    };
+    
+    agregarAlCarrito(productoConPrecio, cantidad);
     navigate('/carrito');
   };
 
   const products = [
-    // Productos originales - usar imágenes disponibles
     {
       id: 1,
       name: "Juguete Para Perros",
@@ -71,7 +94,7 @@ const Producto = () => {
       id: 2,
       name: "Cama Para Perros", 
       price: "$33.000",
-      images: [Shopping], // Usar imagen disponible temporalmente
+      images: [Shopping], // Usar imagen que SÍ existe
       category: "Camas"
     },
     {
@@ -81,8 +104,6 @@ const Producto = () => {
       images: [Download, Comida],
       category: "Alimentos"
     },
-
-    // Nuevos productos - Alimentos
     {
       id: 4,
       name: "Alimento Premium Gatos",
@@ -111,8 +132,6 @@ const Producto = () => {
       images: [AlimentoCachorros],
       category: "Alimentos"
     },
-
-    // Nuevos productos - Juguetes
     {
       id: 8,
       name: "Pelota con Sonido",
@@ -141,8 +160,6 @@ const Producto = () => {
       images: [RatonJuguete],
       category: "Juguetes"
     },
-
-    // Nuevos productos - Accesorios
     {
       id: 12,
       name: "Correa Retráctil",
@@ -171,8 +188,6 @@ const Producto = () => {
       images: [Transportadora],
       category: "Accesorios"
     },
-
-    // Nuevos productos - Higiene
     {
       id: 16,
       name: "Shampoo Antipulgas",
@@ -210,7 +225,7 @@ const Producto = () => {
     }
   ];
 
-  // Agrupar productos por categoría
+
   const productosPorCategoria = products.reduce((acc, product) => {
     if (!acc[product.category]) {
       acc[product.category] = [];
@@ -232,6 +247,7 @@ const Producto = () => {
             <li><Link to="/productos" className="active">Catálogo</Link></li>
             <li><Link to="/carrito">Carrito</Link></li>
             <li><Link to="/registro">Registro</Link></li>
+            <li>{usuario ? `Hola, ${usuario.nombre}` : 'Invitado'}</li>
           </ul>
         </nav>
       </header>
@@ -240,6 +256,7 @@ const Producto = () => {
         <div className="catalogo-header">
           <h1>Nuestro Catálogo de Productos</h1>
           <p>Encuentra todo lo que tu mascota necesita</p>
+          {mensaje && <div className={`mensaje ${!usuario ? 'error' : 'exito'}`}>{mensaje}</div>}
         </div>
 
         {Object.entries(productosPorCategoria).map(([categoria, productos]) => (
@@ -256,7 +273,7 @@ const Producto = () => {
                         alt={`${product.name} ${index + 1}`}
                         className="producto-imagen"
                         onError={(e) => {
-                          e.target.src = LogoHappyPets; // Fallback a logo si la imagen no carga
+                          e.target.src = LogoHappyPets;
                         }}
                       />
                     ))}
@@ -270,8 +287,9 @@ const Producto = () => {
                       <input 
                         type="number" 
                         min="1"
+                        max="10"
                         value={cantidades[product.id] || 1}
-                        onChange={(e) => handleCantidadChange(product.id, parseInt(e.target.value))}
+                        onChange={(e) => handleCantidadChange(product.id, parseInt(e.target.value) || 1)}
                         className="cantidad-input"
                       />
                     </div>
@@ -280,14 +298,16 @@ const Producto = () => {
                       <button 
                         className="btn-añadir-carrito"
                         onClick={() => handleAñadirCarrito(product)}
+                        disabled={!usuario}
                       >
-                        🛒 Añadir al Carrito
+                        🛒 {usuario ? 'Añadir al Carrito' : 'Inicia Sesión'}
                       </button>
                       <button 
                         className="btn-comprar-ahora"
                         onClick={() => handleComprarAhora(product)}
+                        disabled={!usuario}
                       >
-                        ⚡ Comprar Ahora
+                        ⚡ {usuario ? 'Comprar Ahora' : 'Inicia Sesión'}
                       </button>
                     </div>
                   </div>
