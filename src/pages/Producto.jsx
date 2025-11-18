@@ -255,7 +255,7 @@ const Producto = () => {
 
         <nav className="menu-superior">
           <ul>
-            <li><Link to="/Inicio">Hogar</Link></li>
+            <li><Link to="/">Hogar</Link></li>
             <li><Link to="/productos" className="active">Catálogo</Link></li>
             <li><Link to="/carrito">Carrito</Link></li>
             <li><Link to="/registro">Registro</Link></li>
