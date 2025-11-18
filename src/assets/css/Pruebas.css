@@ -412,6 +412,76 @@ button[type="submit"]:hover {
   transform: scale(1.05);
 }
 
+/* ===== ESTILOS PARA LA SECCIÓN ACERCA DE ===== */
+.acerca-de {
+  background: linear-gradient(135deg, var(--primary) 0%, var(--primary-light) 100%);
+  padding: 4rem 2rem;
+  border-radius: 20px;
+  margin: 3rem auto;
+  max-width: 1200px;
+  color: white;
+}
+
+.acerca-contenido {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3rem;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.acerca-texto-contenedor {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.texto-recuadro {
+  background: rgba(255, 255, 255, 0.95);
+  padding: 2.5rem;
+  border-radius: 15px;
+  box-shadow: var(--shadow-medium);
+  border: 3px solid var(--accent);
+  max-width: 500px;
+  backdrop-filter: blur(10px);
+}
+
+.texto-recuadro h2 {
+  color: var(--text-dark);
+  font-size: 2.2rem;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  font-weight: 700;
+}
+
+.texto-grande {
+  font-size: 1.3rem;
+  line-height: 1.7;
+  color: var(--text-dark);
+  margin-bottom: 1.2rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.texto-recuadro p:last-child {
+  margin-bottom: 0;
+}
+
+.acerca-imagen {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+}
+
+.acerca-imagen img {
+  width: 100%;
+  max-width: 450px;
+  border-radius: 15px;
+  box-shadow: var(--shadow-medium);
+  border: 3px solid var(--accent);
+}
+
 /* ===== MENSAJES Y ESTADOS ===== */
 .mensaje {
   padding: 1rem 1.5rem;
@@ -589,6 +659,29 @@ button[type="submit"]:hover {
     font-size: 2rem;
   }
   
+  /* Responsive para la sección Acerca De */
+  .acerca-contenido {
+    flex-direction: column;
+    text-align: center;
+    gap: 2rem;
+  }
+  
+  .texto-recuadro {
+    padding: 2rem;
+  }
+  
+  .texto-recuadro h2 {
+    font-size: 1.8rem;
+  }
+  
+  .texto-grande {
+    font-size: 1.1rem;
+  }
+  
+  .acerca-imagen img {
+    max-width: 300px;
+  }
+  
   .footer-contenedor {
     grid-template-columns: 1fr;
     text-align: center;
@@ -615,6 +708,24 @@ button[type="submit"]:hover {
   .producto-images {
     flex-direction: column;
     align-items: center;
+  }
+  
+  /* Responsive móvil para Acerca De */
+  .acerca-de {
+    padding: 2rem 1rem;
+    margin: 2rem 1rem;
+  }
+  
+  .texto-recuadro {
+    padding: 1.5rem;
+  }
+  
+  .texto-recuadro h2 {
+    font-size: 1.6rem;
+  }
+  
+  .texto-grande {
+    font-size: 1rem;
   }
 }
 

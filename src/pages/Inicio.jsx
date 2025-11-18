@@ -30,7 +30,7 @@ const Inicio = () => {
       <main>
         <section className="hero">
           <div className="hero-text">
-            <h2>Bienvenido a DogShop</h2>
+            <h2>Bienvenido a Happy Pets</h2>
             <p>En Happy Pets, encontrarás todo lo que tu mejor amigo necesita para ser feliz. ❤️🐶</p>
             <Link to="/productos" className="btn-hero">
               Ver productos
@@ -42,15 +42,23 @@ const Inicio = () => {
         </section>
 
         <section className="acerca-de">
-          <div className="acerca-texto">
-            <h2>Acerca de DogShop</h2>
-            <p>
-              En DogShop nos apasiona conectar a las personas con sus compañeros caninos ideales. 
-              Nuestro objetivo es ofrecer una experiencia confiable y alegre para todos los amantes de los perros.
-            </p>
-          </div>
-          <div className="acerca-imagen">
-            <img src={AboutImage} alt="Perros felices" />
+          <div className="acerca-contenido">
+            <div className="acerca-texto-contenedor">
+              <div className="texto-recuadro">
+                <h2>Acerca de Happy Pets</h2>
+                <p className="texto-grande">
+                  En Happy Pets nos apasiona conectar a las personas con sus compañeros caninos ideales. 
+                  Nuestro objetivo es ofrecer una experiencia confiable y alegre para todos los amantes de los perros.
+                </p>
+                <p className="texto-grande">
+                  Ofrecemos productos de alta calidad, alimentos nutritivos y accesorios que harán 
+                  la vida de tu mascota más feliz y cómoda.
+                </p>
+              </div>
+            </div>
+            <div className="acerca-imagen">
+              <img src={AboutImage} alt="Perros felices" />
+            </div>
           </div>
         </section>
       </main>
