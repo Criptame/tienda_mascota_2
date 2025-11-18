@@ -1,0 +1,270 @@
+.perfil-page {
+  min-height: 100vh;
+  background-color: #f8f9fa;
+}
+
+.perfil-main {
+  padding: 2rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.perfil-header {
+  text-align: center;
+  margin-bottom: 3rem;
+}
+
+.perfil-header h1 {
+  color: #2c3e50;
+  margin-bottom: 0.5rem;
+}
+
+.perfil-header p {
+  color: #7f8c8d;
+  font-size: 1.1rem;
+}
+
+.perfil-contenedor {
+  display: grid;
+  gap: 2rem;
+}
+
+.perfil-seccion {
+  background: white;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.seccion-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid #ecf0f1;
+  padding-bottom: 1rem;
+}
+
+.seccion-header h2 {
+  color: #2c3e50;
+  margin: 0;
+}
+
+.btn-editar {
+  background: #3498db;
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.btn-editar:hover {
+  background: #2980b9;
+}
+
+.formulario-perfil {
+  display: grid;
+  gap: 1rem;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+}
+
+.form-group label {
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  color: #2c3e50;
+}
+
+.form-group input,
+.form-group textarea {
+  padding: 0.75rem;
+  border: 2px solid #ecf0f1;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.3s;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+  outline: none;
+  border-color: #3498db;
+}
+
+.btn-guardar {
+  background: #27ae60;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+  justify-self: start;
+}
+
+.btn-guardar:hover {
+  background: #219a52;
+}
+
+.info-perfil {
+  display: grid;
+  gap: 1rem;
+}
+
+.info-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px solid #ecf0f1;
+}
+
+.info-item:last-child {
+  border-bottom: none;
+}
+
+.info-item strong {
+  color: #2c3e50;
+  min-width: 120px;
+}
+
+.info-item span {
+  color: #7f8c8d;
+  text-align: right;
+}
+
+.carrito-resumen {
+  text-align: center;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+}
+
+.carrito-resumen p {
+  margin: 0.5rem 0;
+  font-size: 1.1rem;
+}
+
+.btn-primario {
+  display: inline-block;
+  background: #e74c3c;
+  color: white;
+  padding: 0.75rem 1.5rem;
+  text-decoration: none;
+  border-radius: 6px;
+  margin-top: 1rem;
+  transition: background 0.3s;
+}
+
+.btn-primario:hover {
+  background: #c0392b;
+}
+
+.historial-compras {
+  display: grid;
+  gap: 1rem;
+}
+
+.compra-item {
+  background: #f8f9fa;
+  padding: 1.5rem;
+  border-radius: 8px;
+  border-left: 4px solid #3498db;
+}
+
+.compra-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.compra-fecha {
+  font-weight: bold;
+  color: #2c3e50;
+}
+
+.compra-estado {
+  padding: 0.25rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.875rem;
+  font-weight: bold;
+}
+
+.compra-estado.completado {
+  background: #d4edda;
+  color: #155724;
+}
+
+.compra-estado.pendiente {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.compra-productos,
+.compra-total {
+  margin: 0.25rem 0;
+  color: #7f8c8d;
+}
+
+.acciones-perfil {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.btn-cerrar-sesion {
+  background: #e74c3c;
+  color: white;
+  border: none;
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s;
+}
+
+.btn-cerrar-sesion:hover {
+  background: #c0392b;
+}
+
+.no-autenticado {
+  text-align: center;
+  padding: 4rem 2rem;
+}
+
+.no-autenticado h2 {
+  color: #7f8c8d;
+  margin-bottom: 2rem;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .perfil-main {
+    padding: 1rem;
+  }
+  
+  .perfil-seccion {
+    padding: 1.5rem;
+  }
+  
+  .info-item {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+  }
+  
+  .info-item span {
+    text-align: left;
+  }
+  
+  .compra-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.5rem;
+  }
+}

@@ -1,5 +1,7 @@
-import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
+import { CarritoContext } from '../context/CarritoContext';
 import '../assets/css/Pruebas.css';
 import LogoHappyPets from '../assets/img/LogoHappyPets.png';
 import FacebookIcon from '../assets/img/facebook.png';
@@ -7,6 +9,11 @@ import InstagramIcon from '../assets/img/instagram.png';
 import TwitterIcon from '../assets/img/twitter.png';
 
 const Registro = () => {
+  const navigate = useNavigate();
+  const { registrarUsuario, iniciarSesion, usuario } = useContext(AuthContext);
+  const { productoParaRegistro, agregarAlCarrito, limpiarProductoRegistro } = useContext(CarritoContext);
+  
+  const [esLogin, setEsLogin] = useState(false);
   const [formData, setFormData] = useState({
     correo: '',
     nombre: '',
@@ -16,6 +23,7 @@ const Registro = () => {
   });
 
   const [errors, setErrors] = useState({});
+  const [mensaje, setMensaje] = useState('');
 
   const handleInputChange = (e) => {
     const { id, value } = e.target;
@@ -62,16 +70,73 @@ const Registro = () => {
     setErrors(newErrors);
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setMensaje('');
     
     if (Object.keys(errors).length > 0 || !formData.correo.includes('@') || formData.contraseña.length < 8) {
-      alert("Por favor, corrige los errores antes de continuar.");
+      setMensaje("Por favor, corrige los errores antes de continuar.");
       return;
     }
 
-    console.log('Registro exitoso:', formData);
-    alert('¡Registro exitoso!');
+    try {
+      if (esLogin) {
+        // Simular inicio de sesión
+        const usuarioSimulado = {
+          id: Date.now(),
+          nombre: formData.nombre || formData.correo.split('@')[0],
+          apellido: formData.apellido || '',
+          email: formData.correo,
+          fechaRegistro: new Date().toISOString()
+        };
+        
+        iniciarSesion(usuarioSimulado, 'token-simulado-login');
+        setMensaje('¡Inicio de sesión exitoso!');
+      } else {
+        // Validar contraseñas para registro
+        if (formData.contraseña !== formData.confirmar_contraseña) {
+          setMensaje("Las contraseñas no coinciden.");
+          return;
+        }
+
+        // Registrar usuario
+        await registrarUsuario({
+          nombre: formData.nombre,
+          apellido: formData.apellido,
+          email: formData.correo,
+          password: formData.contraseña
+        });
+        setMensaje('¡Registro exitoso!');
+      }
+
+      // Si hay un producto pendiente, agregarlo al carrito después de un breve delay
+      if (productoParaRegistro) {
+        setTimeout(() => {
+          const { producto, accion, cantidad } = productoParaRegistro;
+          const productoConPrecio = {
+            ...producto,
+            precioNumerico: parseFloat(producto.price.replace('$', '').replace('.', ''))
+          };
+          
+          agregarAlCarrito(productoConPrecio, cantidad);
+          
+          // Redirigir según la acción
+          if (accion === 'comprarAhora') {
+            navigate('/carrito');
+          } else {
+            navigate('/productos');
+          }
+          
+          limpiarProductoRegistro();
+        }, 1500);
+      } else {
+        // Si no hay producto pendiente, ir al catálogo
+        setTimeout(() => navigate('/productos'), 1500);
+      }
+      
+    } catch (error) {
+      setMensaje('Error: ' + error.message);
+    }
   };
 
   return (
@@ -87,14 +152,62 @@ const Registro = () => {
             <li><Link to="/productos">Catálogo</Link></li>
             <li><Link to="/carrito">Carrito</Link></li>
             <li><Link to="/registro" className="active">Registro</Link></li>
+            <li><Link to="/perfil">Mi Perfil</Link></li>
+            <li>{usuario ? `Hola, ${usuario.nombre}` : 'Invitado'}</li>
           </ul>
         </nav>
       </header>
 
       <main>
         <div className="card">
-          <h2>Iniciar Registro</h2>
+          <h2>{esLogin ? 'Iniciar Sesión' : 'Registrarse'}</h2>
+
+          {/* Mostrar información del producto si viene del catálogo */}
+          {productoParaRegistro && (
+            <div className="producto-pendiente-info">
+              <h3>¡Estás a un paso de obtener tu producto!</h3>
+              <p><strong>Producto:</strong> {productoParaRegistro.producto.name}</p>
+              <p><strong>Precio:</strong> {productoParaRegistro.producto.price}</p>
+              <p><strong>Cantidad:</strong> {productoParaRegistro.cantidad}</p>
+              <p>Completa tu {esLogin ? 'inicio de sesión' : 'registro'} para continuar con la compra.</p>
+            </div>
+          )}
+
+          {mensaje && (
+            <div className={`mensaje ${mensaje.includes('éxito') || mensaje.includes('exito') ? 'exito' : 'error'}`}>
+              {mensaje}
+            </div>
+          )}
+
           <form id="loginForm" onSubmit={handleSubmit}>
+            {!esLogin && (
+              <>
+                <label htmlFor="nombre">Nombre:</label>
+                <input 
+                  type="text" 
+                  id="nombre" 
+                  placeholder="Ingresa tu nombre" 
+                  value={formData.nombre}
+                  onChange={handleInputChange}
+                  required 
+                />
+                <span id="nombreError" className="error"></span>
+                <br /><br />
+
+                <label htmlFor="apellido">Apellido:</label>
+                <input 
+                  type="text" 
+                  id="apellido" 
+                  placeholder="Ingresa tu apellido" 
+                  value={formData.apellido}
+                  onChange={handleInputChange}
+                  required 
+                />
+                <span id="apellidoError" className="error"></span>
+                <br /><br />
+              </>
+            )}
+
             <label htmlFor="correo">Correo:</label>
             <input 
               type="text" 
@@ -107,30 +220,6 @@ const Registro = () => {
             <span id="correoError" className="error" style={{color: 'red'}}>
               {errors.correo}
             </span>
-            <br /><br />
-
-            <label htmlFor="nombre">Nombre:</label>
-            <input 
-              type="text" 
-              id="nombre" 
-              placeholder="Ingresa tu nombre" 
-              value={formData.nombre}
-              onChange={handleInputChange}
-              required 
-            />
-            <span id="nombreError" className="error"></span>
-            <br /><br />
-
-            <label htmlFor="apellido">Apellido:</label>
-            <input 
-              type="text" 
-              id="apellido" 
-              placeholder="Ingresa tu apellido" 
-              value={formData.apellido}
-              onChange={handleInputChange}
-              required 
-            />
-            <span id="apellidoError" className="error"></span>
             <br /><br />
             
             <label htmlFor="contraseña">Contraseña:</label>
@@ -147,25 +236,35 @@ const Registro = () => {
             </span>
             <br /><br />
 
-            <label htmlFor="confirmar_contraseña">Confirmar Contraseña:</label>
-            <input 
-              type="password" 
-              id="confirmar_contraseña" 
-              placeholder="Verifica tu contraseña" 
-              value={formData.confirmar_contraseña}
-              onChange={handleInputChange}
-              required 
-            />
-            <span id="confirmar_contraseñaError" className="error" style={{color: 'red'}}>
-              {errors.confirmar_contraseña}
-            </span>
-            <br /><br />
+            {!esLogin && (
+              <>
+                <label htmlFor="confirmar_contraseña">Confirmar Contraseña:</label>
+                <input 
+                  type="password" 
+                  id="confirmar_contraseña" 
+                  placeholder="Verifica tu contraseña" 
+                  value={formData.confirmar_contraseña}
+                  onChange={handleInputChange}
+                  required 
+                />
+                <span id="confirmar_contraseñaError" className="error" style={{color: 'red'}}>
+                  {errors.confirmar_contraseña}
+                </span>
+                <br /><br />
+              </>
+            )}
     
-            <button type="submit">Ingresar</button>
+            <button type="submit">{esLogin ? 'Iniciar Sesión' : 'Registrarse'}</button>
           </form>
 
           <p className="link">
-            ¿Ya tienes cuenta? <Link to="/login">Ingresa aquí</Link>
+            {esLogin ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'} 
+            <span 
+              onClick={() => setEsLogin(!esLogin)} 
+              style={{color: '#007bff', cursor: 'pointer', marginLeft: '5px'}}
+            >
+              {esLogin ? ' Regístrate aquí' : ' Inicia sesión aquí'}
+            </span>
           </p>
         </div>
       </main>
@@ -184,6 +283,7 @@ const Registro = () => {
               <li><Link to="/productos">Catálogo</Link></li>
               <li><Link to="/carrito">Carrito</Link></li>
               <li><Link to="/registro">Registro</Link></li>
+              <li><Link to="/perfil">Mi Perfil</Link></li>
             </ul>
           </div>
 

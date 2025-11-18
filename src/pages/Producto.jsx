@@ -33,7 +33,7 @@ import Wfaewfe from '../assets/img/wfaewfe(1).webp';
 
 const Producto = () => {
   const navigate = useNavigate();
-  const { agregarAlCarrito } = useContext(CarritoContext);
+  const { agregarAlCarrito, guardarProductoParaRegistro } = useContext(CarritoContext);
   const { usuario } = useContext(AuthContext);
   const [cantidades, setCantidades] = useState({});
   const [mensaje, setMensaje] = useState('');
@@ -46,18 +46,20 @@ const Producto = () => {
     }));
   };
 
-  const validarCompra = () => {
-    if (!usuario) {
-      setMensaje('Debes iniciar sesión para realizar compras');
-      setTimeout(() => setMensaje(''), 3000);
-      return false;
-    }
-    return true;
-  };
-
   const handleAñadirCarrito = (product) => {
-    if (!validarCompra()) return;
+    if (!usuario) {
+      // Guardar producto para después del registro
+      guardarProductoParaRegistro({
+        producto: product,
+        accion: 'añadirCarrito',
+        cantidad: cantidades[product.id] || 1
+      });
+      // Redirigir al registro
+      navigate('/registro');
+      return;
+    }
 
+    // Si ya está logueado, proceder normalmente
     const cantidad = cantidades[product.id] || 1;
     const productoConPrecio = {
       ...product,
@@ -70,8 +72,19 @@ const Producto = () => {
   };
 
   const handleComprarAhora = (product) => {
-    if (!validarCompra()) return;
+    if (!usuario) {
+      // Guardar producto para después del registro
+      guardarProductoParaRegistro({
+        producto: product,
+        accion: 'comprarAhora',
+        cantidad: cantidades[product.id] || 1
+      });
+      // Redirigir al registro
+      navigate('/registro');
+      return;
+    }
 
+    // Si ya está logueado, proceder normalmente
     const cantidad = cantidades[product.id] || 1;
     const productoConPrecio = {
       ...product,
@@ -225,7 +238,6 @@ const Producto = () => {
     }
   ];
 
-
   const productosPorCategoria = products.reduce((acc, product) => {
     if (!acc[product.category]) {
       acc[product.category] = [];
@@ -243,10 +255,11 @@ const Producto = () => {
 
         <nav className="menu-superior">
           <ul>
-            <li><Link to="/">Hogar</Link></li>
+            <li><Link to="/Inicio">Hogar</Link></li>
             <li><Link to="/productos" className="active">Catálogo</Link></li>
             <li><Link to="/carrito">Carrito</Link></li>
             <li><Link to="/registro">Registro</Link></li>
+            <li><Link to="/perfil">Mi Perfil</Link></li>
             <li>{usuario ? `Hola, ${usuario.nombre}` : 'Invitado'}</li>
           </ul>
         </nav>
@@ -298,16 +311,14 @@ const Producto = () => {
                       <button 
                         className="btn-añadir-carrito"
                         onClick={() => handleAñadirCarrito(product)}
-                        disabled={!usuario}
                       >
-                        🛒 {usuario ? 'Añadir al Carrito' : 'Inicia Sesión'}
+                        🛒 {usuario ? 'Añadir al Carrito' : 'Regístrate para Comprar'}
                       </button>
                       <button 
                         className="btn-comprar-ahora"
                         onClick={() => handleComprarAhora(product)}
-                        disabled={!usuario}
                       >
-                        ⚡ {usuario ? 'Comprar Ahora' : 'Inicia Sesión'}
+                        ⚡ {usuario ? 'Comprar Ahora' : 'Regístrate para Comprar'}
                       </button>
                     </div>
                   </div>

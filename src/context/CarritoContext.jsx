@@ -12,6 +12,7 @@ export const useCarrito = () => {
 
 export const CarritoProvider = ({ children }) => {
   const [carrito, setCarrito] = useState([]);
+  const [productoParaRegistro, setProductoParaRegistro] = useState(null);
 
   const agregarAlCarrito = (producto, cantidad = 1) => {
     setCarrito(prevCarrito => {
@@ -57,14 +58,27 @@ export const CarritoProvider = ({ children }) => {
     return carrito.reduce((total, item) => total + item.cantidad, 0);
   };
 
+  // Nueva funcionalidad: Guardar producto para después del registro
+  const guardarProductoParaRegistro = (productoData) => {
+    setProductoParaRegistro(productoData);
+  };
+
+  // Limpiar producto pendiente después del registro
+  const limpiarProductoRegistro = () => {
+    setProductoParaRegistro(null);
+  };
+
   const value = {
     carrito,
+    productoParaRegistro,
     agregarAlCarrito,
     actualizarCantidad,
     eliminarDelCarrito,
     limpiarCarrito,
     obtenerTotal,
-    obtenerCantidadTotal
+    obtenerCantidadTotal,
+    guardarProductoParaRegistro,
+    limpiarProductoRegistro
   };
 
   return (

@@ -62,6 +62,7 @@ const Carrito = () => {
               <li><Link to="/productos">Catálogo</Link></li>
               <li><Link to="/carrito" className="active">Carrito</Link></li>
               <li><Link to="/registro">Registro</Link></li>
+              <li><Link to="/perfil">Mi Perfil</Link></li>
             </ul>
           </nav>
         </header>
