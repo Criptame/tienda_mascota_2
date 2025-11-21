@@ -1,4 +1,6 @@
 import React, { createContext, useState, useContext, useEffect } from 'react';
+import { clienteService } from '../services/clienteService';
+import { adminService } from '../services/adminService';
 
 const AuthContext = createContext();
 
@@ -25,41 +27,58 @@ export const AuthProvider = ({ children }) => {
     setCargando(false);
   }, []);
 
-  const iniciarSesion = (datosUsuario, token) => {
-    setUsuario(datosUsuario);
-    // Guardar en localStorage para persistencia
-    localStorage.setItem('usuario', JSON.stringify(datosUsuario));
-    localStorage.setItem('token', token);
+  const iniciarSesion = async (credenciales, esAdmin = false) => {
+    try {
+      let response;
+      
+      if (esAdmin) {
+        response = await adminService.loginAdmin(credenciales);
+      } else {
+        response = await clienteService.loginCliente(credenciales);
+      }
+
+      const { usuario: userData, token } = response;
+      
+      setUsuario(userData);
+      localStorage.setItem('usuario', JSON.stringify(userData));
+      localStorage.setItem('token', token);
+      
+      return userData;
+    } catch (error) {
+      throw error;
+    }
   };
 
-  const registrarUsuario = (datosUsuario) => {
-    // Simular registro - en una app real harías una petición a tu API
-    const nuevoUsuario = {
-      id: Date.now(),
-      nombre: datosUsuario.nombre,
-      email: datosUsuario.email,
-      fechaRegistro: new Date().toISOString()
-    };
-    
-    setUsuario(nuevoUsuario);
-    // Guardar en localStorage
-    localStorage.setItem('usuario', JSON.stringify(nuevoUsuario));
-    localStorage.setItem('token', 'token-simulado-' + Date.now());
-    
-    return Promise.resolve(nuevoUsuario);
+  const registrarUsuario = async (datosUsuario) => {
+    try {
+      const response = await clienteService.registrarCliente(datosUsuario);
+      const { usuario: userData, token } = response;
+      
+      setUsuario(userData);
+      localStorage.setItem('usuario', JSON.stringify(userData));
+      localStorage.setItem('token', token);
+      
+      return userData;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const cerrarSesion = () => {
     setUsuario(null);
-    // Limpiar localStorage
     localStorage.removeItem('usuario');
     localStorage.removeItem('token');
   };
 
-  const actualizarPerfil = (nuevosDatos) => {
-    const usuarioActualizado = { ...usuario, ...nuevosDatos };
-    setUsuario(usuarioActualizado);
-    localStorage.setItem('usuario', JSON.stringify(usuarioActualizado));
+  const actualizarPerfil = async (nuevosDatos) => {
+    try {
+      const usuarioActualizado = await clienteService.actualizarPerfil(nuevosDatos);
+      setUsuario(usuarioActualizado);
+      localStorage.setItem('usuario', JSON.stringify(usuarioActualizado));
+      return usuarioActualizado;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const value = {

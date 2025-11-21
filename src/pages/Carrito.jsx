@@ -57,14 +57,16 @@ const Carrito = () => {
             <img src={LogoHappyPets} alt="Logo de HappyPets" className="logo" />
           </div>
           <nav className="menu-superior">
-            <ul>
-              <li><Link to="/">Hogar</Link></li>
-              <li><Link to="/productos">Catálogo</Link></li>
-              <li><Link to="/carrito" className="active">Carrito</Link></li>
-              <li><Link to="/registro">Registro</Link></li>
-              <li><Link to="/perfil">Mi Perfil</Link></li>
-            </ul>
-          </nav>
+  <ul>
+    <li><Link to="/">Hogar</Link></li>
+    <li><Link to="/productos">Catálogo</Link></li>
+    <li><Link to="/carrito" className="active">Carrito</Link></li>
+    {/* Solo muestra Registro si NO hay usuario */}
+    {!usuario && <li><Link to="/registro">Registro</Link></li>}
+    {/* Solo muestra saludo si hay usuario autenticado */}
+    {usuario && <li>Hola, {usuario.nombre}</li>}
+  </ul>
+</nav>
         </header>
 
         <main>
@@ -92,7 +94,8 @@ const Carrito = () => {
             <li><Link to="/productos">Catálogo</Link></li>
             <li><Link to="/carrito" className="active">Carrito</Link></li>
             <li><Link to="/registro">Registro</Link></li>
-            <li>Hola, {usuario.nombre}</li>
+            {/* Solo muestra saludo si hay usuario */}
+            {usuario && <li>Hola, {usuario.nombre}</li>}
           </ul>
         </nav>
       </header>

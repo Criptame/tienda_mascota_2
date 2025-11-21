@@ -254,15 +254,17 @@ const Producto = () => {
         </div>
 
         <nav className="menu-superior">
-          <ul>
-            <li><Link to="/">Hogar</Link></li>
-            <li><Link to="/productos" className="active">Catálogo</Link></li>
-            <li><Link to="/carrito">Carrito</Link></li>
-            <li><Link to="/registro">Registro</Link></li>
-            <li><Link to="/perfil">Mi Perfil</Link></li>
-            <li>{usuario ? `Hola, ${usuario.nombre}` : 'Invitado'}</li>
-          </ul>
-        </nav>
+  <ul>
+    <li><Link to="/">Hogar</Link></li>
+    <li><Link to="/productos" className="active">Catálogo</Link></li>
+    <li><Link to="/carrito">Carrito</Link></li>
+    {/* Solo muestra Registro si NO hay usuario */}
+    {!usuario && <li><Link to="/registro">Registro</Link></li>}
+    <li><Link to="/perfil">Mi Perfil</Link></li>
+    {/* Solo muestra saludo si hay usuario autenticado */}
+    {usuario && <li>Hola, {usuario.nombre}</li>}
+  </ul>
+</nav>
       </header>
 
       <main>
@@ -311,16 +313,24 @@ const Producto = () => {
                       <button 
                         className="btn-añadir-carrito"
                         onClick={() => handleAñadirCarrito(product)}
+                        title={!usuario ? "Debes registrarte para añadir al carrito" : ""}
                       >
-                        🛒 {usuario ? 'Añadir al Carrito' : 'Regístrate para Comprar'}
+                        🛒 Añadir al Carrito
                       </button>
                       <button 
                         className="btn-comprar-ahora"
                         onClick={() => handleComprarAhora(product)}
+                        title={!usuario ? "Debes registrarte para comprar" : ""}
                       >
-                        ⚡ {usuario ? 'Comprar Ahora' : 'Regístrate para Comprar'}
+                        ⚡ Comprar Ahora
                       </button>
                     </div>
+                    
+                    {!usuario && (
+                      <div className="registro-requerido">
+                        <small>⚠️ Debes registrarte para comprar</small>
+                      </div>
+                    )}
                   </div>
                 </div>
               ))}

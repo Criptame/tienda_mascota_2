@@ -147,15 +147,17 @@ const Registro = () => {
         </div>
 
         <nav className="menu-superior">
-          <ul>
-            <li><Link to="/">Hogar</Link></li>
-            <li><Link to="/productos">Catálogo</Link></li>
-            <li><Link to="/carrito">Carrito</Link></li>
-            <li><Link to="/registro" className="active">Registro</Link></li>
-            <li><Link to="/perfil">Mi Perfil</Link></li>
-            <li>{usuario ? `Hola, ${usuario.nombre}` : 'Invitado'}</li>
-          </ul>
-        </nav>
+  <ul>
+    <li><Link to="/">Hogar</Link></li>
+    <li><Link to="/productos">Catálogo</Link></li>
+    <li><Link to="/carrito">Carrito</Link></li>
+    {/* Solo muestra Registro si NO hay usuario (en la página de registro) */}
+    {!usuario && <li><Link to="/registro" className="active">Registro</Link></li>}
+    <li><Link to="/perfil">Mi Perfil</Link></li>
+    {/* Solo muestra saludo si hay usuario autenticado */}
+    {usuario && <li>Hola, {usuario.nombre}</li>}
+  </ul>
+</nav>
       </header>
 
       <main>

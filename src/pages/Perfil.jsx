@@ -93,18 +93,20 @@ const Perfil = () => {
         </div>
 
         <nav className="menu-superior">
-          <ul>
-            <li><Link to="/">Hogar</Link></li>
-            <li><Link to="/productos">Catálogo</Link></li>
-            <li><Link to="/carrito">Carrito</Link></li>
-            {/* En perfil, mostramos el texto activo pero sin Link */}
-            <li><span className="active">Mi Perfil</span></li>
-            <li>Hola, {usuario.nombre}</li>
-          </ul>
-        </nav>
+  <ul>
+    <li><Link to="/">Hogar</Link></li>
+    <li><Link to="/productos">Catálogo</Link></li>
+    <li><Link to="/carrito">Carrito</Link></li>
+    {/* Solo muestra Registro si NO hay usuario */}
+    {!usuario && <li><Link to="/registro">Registro</Link></li>}
+    {/* En perfil, mostramos el texto activo pero sin Link */}
+    <li><span className="active">Mi Perfil</span></li>
+    {/* Solo muestra saludo si hay usuario */}
+    {usuario && <li>Hola, {usuario.nombre}</li>}
+  </ul>
+</nav>
       </header>
 
-      {/* ... (el resto del código del perfil permanece igual) ... */}
       <main className="perfil-main">
         <div className="perfil-header">
           <h1>Mi Perfil</h1>

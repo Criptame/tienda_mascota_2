@@ -1,4 +1,5 @@
 import React, { createContext, useState, useContext } from 'react';
+import { ventaService } from '../services/ventaService';
 
 const CarritoContext = createContext();
 
@@ -15,35 +16,31 @@ export const CarritoProvider = ({ children }) => {
   const [productoParaRegistro, setProductoParaRegistro] = useState(null);
 
   const agregarAlCarrito = (producto, cantidad = 1) => {
-    setCarrito(prevCarrito => {
-      const existe = prevCarrito.find(item => item.id === producto.id);
-      
+    setCarrito(prev => {
+      const existe = prev.find(item => item.id === producto.id);
       if (existe) {
-        return prevCarrito.map(item =>
+        return prev.map(item =>
           item.id === producto.id
             ? { ...item, cantidad: item.cantidad + cantidad }
             : item
         );
-      } else {
-        return [...prevCarrito, { ...producto, cantidad }];
       }
+      return [...prev, { ...producto, cantidad }];
     });
   };
 
   const actualizarCantidad = (productId, nuevaCantidad) => {
-    setCarrito(prevCarrito =>
-      prevCarrito.map(item =>
+    setCarrito(prev =>
+      prev.map(item =>
         item.id === productId
-          ? { ...item, cantidad: Math.max(1, nuevaCantidad) }
+          ? { ...item, cantidad: nuevaCantidad }
           : item
       )
     );
   };
 
   const eliminarDelCarrito = (productId) => {
-    setCarrito(prevCarrito =>
-      prevCarrito.filter(item => item.id !== productId)
-    );
+    setCarrito(prev => prev.filter(item => item.id !== productId));
   };
 
   const limpiarCarrito = () => {
@@ -54,18 +51,34 @@ export const CarritoProvider = ({ children }) => {
     return carrito.reduce((total, item) => total + (item.precioNumerico * item.cantidad), 0);
   };
 
-  const obtenerCantidadTotal = () => {
-    return carrito.reduce((total, item) => total + item.cantidad, 0);
+  const guardarProductoParaRegistro = (productoInfo) => {
+    setProductoParaRegistro(productoInfo);
   };
 
-  // Nueva funcionalidad: Guardar producto para después del registro
-  const guardarProductoParaRegistro = (productoData) => {
-    setProductoParaRegistro(productoData);
-  };
-
-  // Limpiar producto pendiente después del registro
   const limpiarProductoRegistro = () => {
     setProductoParaRegistro(null);
+  };
+
+  // Nueva función para procesar compra con el backend
+  const procesarCompra = async (datosPago) => {
+    try {
+      const ventaData = {
+        items: carrito.map(item => ({
+          productoId: item.id,
+          cantidad: item.cantidad,
+          precioUnitario: item.precioNumerico
+        })),
+        total: obtenerTotal(),
+        datosPago: datosPago,
+        direccionEnvio: datosPago.direccionEnvio
+      };
+
+      const resultado = await ventaService.crearVenta(ventaData);
+      limpiarCarrito();
+      return resultado;
+    } catch (error) {
+      throw error;
+    }
   };
 
   const value = {
@@ -76,9 +89,9 @@ export const CarritoProvider = ({ children }) => {
     eliminarDelCarrito,
     limpiarCarrito,
     obtenerTotal,
-    obtenerCantidadTotal,
     guardarProductoParaRegistro,
-    limpiarProductoRegistro
+    limpiarProductoRegistro,
+    procesarCompra
   };
 
   return (

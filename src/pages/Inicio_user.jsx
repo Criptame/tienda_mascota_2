@@ -1,5 +1,6 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import '../assets/css/Pruebas.css';
 import LogoHappyPets from '../assets/img/LogoHappyPets.png';
 import FacebookIcon from '../assets/img/facebook.png';
@@ -7,6 +8,7 @@ import InstagramIcon from '../assets/img/instagram.png';
 import TwitterIcon from '../assets/img/twitter.png';
 
 const InicioUser = () => {
+  const { usuario } = useContext(AuthContext);
   const [formData, setFormData] = useState({
     correo: '',
     contraseña: ''
@@ -71,13 +73,17 @@ const InicioUser = () => {
         </div>
 
         <nav className="menu-superior">
-          <ul>
-            <li><Link to="/">Hogar</Link></li>
-            <li><Link to="/productos">Catálogo</Link></li>
-            <li><Link to="/carrito">Carrito</Link></li>
-            <li><Link to="/registro">Registro</Link></li>
-          </ul>
-        </nav>
+  <ul>
+    <li><Link to="/">Hogar</Link></li>
+    <li><Link to="/productos">Catálogo</Link></li>
+    <li><Link to="/carrito">Carrito</Link></li>
+    {/* Solo muestra Registro si NO hay usuario */}
+    {!usuario && <li><Link to="/registro">Registro</Link></li>}
+    <li><Link to="/perfil">Mi Perfil</Link></li>
+    {/* Solo muestra saludo si hay usuario autenticado */}
+    {usuario && <li>Hola, {usuario.nombre}</li>}
+  </ul>
+</nav>
       </header>
 
       <main>

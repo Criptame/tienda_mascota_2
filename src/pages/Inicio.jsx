@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../context/AuthContext';
 import '../assets/css/Pruebas.css';
 import LogoHappyPets from '../assets/img/LogoHappyPets.png';
 import LocalImage from '../assets/img/local.png';
@@ -9,6 +10,8 @@ import InstagramIcon from '../assets/img/instagram.png';
 import TwitterIcon from '../assets/img/twitter.png';
 
 const Inicio = () => {
+  const { usuario } = useContext(AuthContext);
+
   return (
     <div className="home-page">
       <header>
@@ -16,15 +19,18 @@ const Inicio = () => {
           <img src={LogoHappyPets} alt="Logo de HappyPets" className="logo" />
         </div>
 
-        <nav className="menu-superior">
-          <ul>
-            <li><Link to="/" className="active">Hogar</Link></li>
-            <li><Link to="/productos">Catálogo</Link></li>
-            <li><Link to="/carrito">Carrito</Link></li>
-            <li><Link to="/registro">Registro</Link></li>
-            <li><Link to="/perfil">Mi Perfil</Link></li>
-          </ul>
-        </nav>
+      <nav className="menu-superior">
+  <ul>
+    <li><Link to="/" className="active">Hogar</Link></li>
+    <li><Link to="/productos">Catálogo</Link></li>
+    <li><Link to="/carrito">Carrito</Link></li>
+    {/* Solo muestra Registro si NO hay usuario */}
+    {!usuario && <li><Link to="/registro">Registro</Link></li>}
+    <li><Link to="/perfil">Mi Perfil</Link></li>
+    {/* Solo muestra saludo si hay usuario autenticado */}
+    {usuario && <li>Hola, {usuario.nombre}</li>}
+  </ul>
+</nav>
       </header>
 
       <main>
